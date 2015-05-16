@@ -1,0 +1,29 @@
+#lookupbox-search-key {
+	width:250px;
+}
+
+.lookupbox-result{
+	width: 95%;
+}
+
+.lookupbox-result-header {
+	background-color: #aaa;
+}
+
+.lookupbox-result-row.odd {
+	background-color: #eee;
+}
+
+.lookupbox-result-row.even {
+	background-color: #ddd;
+}
+
+#lookupbox-search-result {
+	margin-top: 10px;
+	height: 250px;
+	overflow: auto
+}
+
+tr.lookupbox-result-row:hover {
+	background-color: #dff;
+}
