@@ -53,7 +53,7 @@
         if (settings.onSearch == null) {
           $.ajax({
             beforeSend: function(){
-            $('#' + settings.loadingDivId).html(settings.imgLoader);
+              $('#' + settings.loadingDivId).html(settings.imgLoader);
             },
             url: settings.url + $("#" + settings.searchTextId).val(),
             success: function(result) {
