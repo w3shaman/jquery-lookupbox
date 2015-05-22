@@ -106,13 +106,13 @@
               $("#" + settings.searchResultId).html(settings.requestErrorMessage);
             }
           });
-  			}
+        }
         else{
           if (typeof settings.onSearch === "function") {
             settings.onSearch.call();
           }
         }
-  		});
+      });
 
       $("#" + settings.searchTextId).keyup(function(e){
         if(e.keyCode == 13){
@@ -121,7 +121,7 @@
       });
 
       $dialog.dialog('open');
-  	});
+    });
   }
 
   $.fn.lookupbox = function(options) {
