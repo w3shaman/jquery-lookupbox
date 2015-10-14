@@ -77,7 +77,7 @@
                   }
                   table = table + "<tr id='lookupbox-result-row-" + i + "' class='" + rowClass + "'>";
                   for (var key in data[i]){
-                    if ($.inArray(key, settings.hiddenFields)) {
+                    if ($.inArray(key, settings.hiddenFields) === -1) {
                       table = table + "<td style='cursor:pointer'>" + data[i][key] + "</td>";
                     }
                   }
