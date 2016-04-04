@@ -1,10 +1,9 @@
 <?php
-$con = mysql_connect("localhost", "root", "123xyz");
-mysql_select_db("lab", $con);
+$con = mysqli_connect("localhost", "root", "123xyz", "lab");
 
-$res = mysql_query("SELECT user_id, user_name FROM user WHERE user_name LIKE '%".mysql_real_escape_string($_GET['chars'], $con)."%'");
+$res = mysqli_query($con, "SELECT user_id, user_name FROM user WHERE user_name LIKE '%".mysqli_real_escape_string($con, $_GET['chars'])."%'");
 $rows = array();
-while ($data = mysql_fetch_assoc($res)) {
+while ($data = mysqli_fetch_assoc($res)) {
   $rows[] = $data;
 }
 
