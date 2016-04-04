@@ -1,8 +1,9 @@
 /**
  * jQuery script for creating lookup box
+ * @version 1.2
  * @requires jQuery UI
  *
- * Copyright (c) 2015 Lucky
+ * Copyright (c) 2016 Lucky
  * Licensed under the GPL license:
  *   http://www.gnu.org/licenses/gpl.html
  */
@@ -58,7 +59,13 @@
             url: settings.url + $("#" + settings.searchTextId).val(),
             success: function(result) {
               try {
-                data = $.parseJSON(result);
+                var data = null;
+
+                if (typeof result == 'string')
+                  data = $.parseJSON(result);
+                else if (typeof result == 'object')
+                  data = result;
+
                 settings.item = data;
                 var table = "<table cellspacing='0' cellpadding='3' id='lookupbox-result' class='lookupbox-result'>";
 
