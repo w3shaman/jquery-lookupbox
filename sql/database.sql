@@ -21,18 +21,28 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 CREATE TABLE IF NOT EXISTS `user` (
   `user_id` varchar(10) NOT NULL,
   `user_name` varchar(100) NOT NULL,
-  PRIMARY KEY (`user_id`)
+  `user_role` varchar(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
 --
 -- Dumping data for table `user`
 --
 
+INSERT INTO `user` (`user_id`, `user_name`, `user_role`) VALUES
+('11111', 'Patrick', 'admin'),
+('11112', 'Sandy', 'power user'),
+('11113', 'Lenny', 'power user'),
+('11114', 'Woody', 'user'),
+('11115', 'Rebecca', 'admin'),
+('11116', 'Olivia', 'user'),
+('11117', 'Jesse', 'guest');
 
-INSERT INTO `user` (`user_id`, `user_name`) VALUES
-('11111', 'Patrick'),
-('11112', 'Sandy'),
-('11113', 'Lenny'),
-('11114', 'Woody'),
-('11115', 'Rebecca'),
-('11116', 'Olivia'),
-('11117', 'Jesse');
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`user_id`);
