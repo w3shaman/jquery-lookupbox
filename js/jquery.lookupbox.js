@@ -1,6 +1,6 @@
 /**
  * jQuery script for creating lookup box
- * @version 1.2
+ * @version 1.2.1
  * @requires jQuery UI
  *
  * Copyright (c) 2016 Lucky
@@ -29,7 +29,8 @@
       draggable: true,
       onItemSelected: null,
       item: null,
-      hiddenFields: []
+      hiddenFields: [],
+      colWidth: null,
     };
     $.extend(settings, options);
 
@@ -67,45 +68,75 @@
                   data = result;
 
                 settings.item = data;
-                var table = "<table cellspacing='0' cellpadding='3' id='lookupbox-result' class='lookupbox-result'>";
 
-                if (settings.tableHeader != null) {
+                if (data.length > 0) {;
+                  var table = "<table cellspacing='0' cellpadding='3' id='lookupbox-result' class='lookupbox-result'>";
+
                   table = table + "<tr id='lookupbox-result-header' class='lookupbox-result-header'>";
-                  for (var i = 0; i<settings.tableHeader.length; i++){
-                    table = table + "<th>" + settings.tableHeader[i] + "</th>";
-                  }
-                  table = table + "</tr>";
-                }
-
-                for(i=0;i<data.length;i++){
-                  var rowClass = 'lookupbox-result-row odd';
-                  if (i % 2 == 0) {
-                    rowClass = 'lookupbox-result-row even';
-                  }
-                  table = table + "<tr id='lookupbox-result-row-" + i + "' class='" + rowClass + "'>";
-                  for (var key in data[i]){
+                  i = 0;
+                  for (var key in data[0]){
                     if ($.inArray(key, settings.hiddenFields) === -1) {
-                      table = table + "<td style='cursor:pointer'>" + data[i][key] + "</td>";
+                      if ($.type(settings.tableHeader) == "object")
+                        idx = key;
+                      else
+                        idx = i;
+
+                      colName = key;
+                      if (settings.tableHeader != null) {
+                        if (typeof(settings.tableHeader[idx]) != "undefined") {
+                          colName = settings.tableHeader[idx];
+                        }
+                      }
+
+                      colWidth = "";
+                      if (settings.colWidth != null) {
+                        if (typeof(settings.colWidth[idx]) != "undefined") {
+                          if (settings.colWidth[idx] != null) {
+                            colWidth = " style='width: " + settings.colWidth[idx] + "'";
+                          }
+                        }
+                      }
+
+                      table = table + "<th" + colWidth + ">" + colName + "</th>";
+
+                      i++;
                     }
                   }
                   table = table + "</tr>";
-                }
-                table = table + "</table>";
 
-                $("#" + settings.searchResultId).html(table);
-
-                if (settings.onItemSelected != null) {
-                  $("#lookupbox-result tr").click(function(){
-                    var arr = $(this).attr("id").split("-");
-                    if (typeof settings.onItemSelected === "function") {
-                      settings.onItemSelected.call(this, settings.item[arr[arr.length - 1]]);
+                  for(i=0;i<data.length;i++){
+                    var rowClass = 'lookupbox-result-row odd';
+                    if (i % 2 == 0) {
+                      rowClass = 'lookupbox-result-row even';
                     }
-                    $dialog.dialog("close");
-                  });
+                    table = table + "<tr id='lookupbox-result-row-" + i + "' class='" + rowClass + "'>";
+                    for (var key in data[i]){
+                      if ($.inArray(key, settings.hiddenFields) === -1) {
+                        table = table + "<td style='cursor:pointer'>" + data[i][key] + "</td>";
+                      }
+                    }
+                    table = table + "</tr>";
+                  }
+                  table = table + "</table>";
+
+                  $("#" + settings.searchResultId).html(table);
+
+                  if (settings.onItemSelected != null) {
+                    $("#lookupbox-result tr").click(function(){
+                      var arr = $(this).attr("id").split("-");
+                      if (typeof settings.onItemSelected === "function") {
+                        settings.onItemSelected.call(this, settings.item[arr[arr.length - 1]]);
+                      }
+                      $dialog.dialog("close");
+                    });
+                  }
+                }
+                else {
+                  $("#" + settings.searchResultId).html(settings.notFoundMessage);
                 }
               }
               catch(e) {
-                $("#" + settings.searchResultId).html(settings.notFoundMessage);
+                $("#" + settings.searchResultId).html(settings.requestErrorMessage);
               }
               $('#' + settings.loadingDivId).html('');
   					},
