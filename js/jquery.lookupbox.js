@@ -88,6 +88,11 @@
                         }
                       }
 
+                      if ($.type(settings.colWidth) == "object")
+                        idx = key;
+                      else
+                        idx = i;
+
                       colWidth = "";
                       if (settings.colWidth != null) {
                         if (typeof(settings.colWidth[idx]) != "undefined") {
