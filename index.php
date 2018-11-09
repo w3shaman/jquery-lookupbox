@@ -133,6 +133,88 @@ $(document).ready(function () {
   });
 });
 </pre>
+  </fieldset><br/>
+  <fieldset>
+    <legend><b>Setting Column Width</b></legend>
+    <p>Now, the column width in table can be configured using <b>colWidth</b> options.</p>
+    <p>The <b>colWidth</b> value can be array for sequential setting or object for setting based on the field name in query result.</p>
+    <form action="" method="post">
+      <table>
+        <tr>
+          <td>User ID</td>
+          <td>:</td>
+          <td>
+            <input type="text" name="user_id3" value="" />
+            <input type="button" value="..." id="lookup3" />
+          </td>
+        </tr>
+        <tr>
+          <td>Name</td>
+          <td>:</td>
+          <td><input type="text" name="user_name3" value="" /></td>
+        </tr>
+        <tr>
+          <td>Role</td>
+          <td>:</td>
+          <td><input type="text" name="user_role3" value="" /></td>
+        </tr>
+      </table>
+      <br/>
+      <input type="submit" value="SAVE" />
+    </form>
+    <script>
+    $(document).ready(function () {
+      $("#lookup3").lookupbox({
+        title: 'Search User',
+        url: 'user.php?chars=',
+        imgLoader: '<img src="images/loader.gif" />',
+        width: 500,
+        onItemSelected: function(data){
+          $('input[name=user_id3]').val(data.user_id);
+          $('input[name=user_name3]').val(data.user_name);
+          $('input[name=user_role3]').val(data.user_role);
+        },
+        tableHeader: ['ID', 'Name', 'Role'],
+        colWidth: ['65px', null, '100px'],
+      });
+    });
+    </script>
+    <p>The code :</p>
+<pre>
+$(document).ready(function () {
+  $("#lookup3").lookupbox({
+    title: 'Search User',
+    url: 'user.php?chars=',
+    imgLoader: '&lt;img src="images/loader.gif" /&gt;',
+    width: 500,
+    onItemSelected: function(data){
+      $('input[name=user_id3]').val(data.user_id);
+      $('input[name=user_name3]').val(data.user_name);
+      $('input[name=user_role3]').val(data.user_role);
+    },
+    tableHeader: ['ID', 'Name', 'Role'],
+    colWidth: ['65px', null, '100px'], // Set column width sequentially.
+  });
+});
+</pre>
+  <p>OR</p>
+<pre>
+$(document).ready(function () {
+  $("#lookup3").lookupbox({
+    title: 'Search User',
+    url: 'user.php?chars=',
+    imgLoader: '&lt;img src="images/loader.gif" /&gt;',
+    width: 500,
+    onItemSelected: function(data){
+      $('input[name=user_id3]').val(data.user_id);
+      $('input[name=user_name3]').val(data.user_name);
+      $('input[name=user_role3]').val(data.user_role);
+    },
+    tableHeader: ['ID', 'Name', 'Role'],
+    colWidth: {'id':'65px', 'user_role':'100px'], // Set column by data key/field name.
+  });
+});
+</pre>
   </fieldset>
 </body>
 </html>
